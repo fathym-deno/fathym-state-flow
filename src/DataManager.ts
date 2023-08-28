@@ -1,4 +1,4 @@
-import { DatabaseSchema } from './DatabaseSchema.ts';
+import { DatabaseSchema } from "./DatabaseSchema.ts";
 
 export class DatabaseManager {
   constructor(private schema: DatabaseSchema) {}

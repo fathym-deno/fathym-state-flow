@@ -1,3 +1,5 @@
+import { JsonSchema } from "./JsonSchema.ts";
+
 export class DatabaseSchema {
   Name: string;
   Database: Record<string, JsonSchema>;
