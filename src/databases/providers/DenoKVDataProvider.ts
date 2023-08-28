@@ -1,5 +1,5 @@
-import { IDataProvider } from "./IDataProvider.ts";
-import { JsonSchema } from "./JsonSchema.ts";
+import { IDataProvider } from "../IDataProvider.ts";
+import { JsonSchema } from "../JsonSchema.ts";
 
 export class DenoKVDataProvider<T> implements IDataProvider<T> {
   constructor(private kv: Deno.Kv) {}
