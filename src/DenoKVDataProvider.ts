@@ -1,4 +1,5 @@
 import { IDataProvider } from "./IDataProvider.ts";
+import { JsonSchema } from "./JsonSchema.ts";
 
 export class DenoKVDataProvider<T> implements IDataProvider<T> {
   constructor(private kv: Deno.Kv) {}
@@ -16,7 +17,7 @@ export class DenoKVDataProvider<T> implements IDataProvider<T> {
     await this.kv.delete([key]);
   }
 
-  async query(query: any): Promise<T[]> {
+  async query(query: JsonSchema): Promise<T[]> {
     // Implement query logic here
     return [];
   }
