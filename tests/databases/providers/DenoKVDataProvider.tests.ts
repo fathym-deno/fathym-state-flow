@@ -1,35 +1,61 @@
-import { assert, describe } from "../../test.deps.ts";
 import { assertEquals } from "$std/testing/asserts.ts";
 import { DenoKVDataProvider } from "../../../src/databases/providers/DenoKVDataProvider.ts";
 
-describe("DenoKVDataProvider Tests", () => {
-  describe("Set and Get Test", () => {
-    const kv = new Map();
-    const provider = new DenoKVDataProvider(kv);
+Deno.test("Deno KV Data Provider Tests", async (t) => {
+  const kv = await Deno.openKv();
 
-    const key = ["testKey"];
-    const value = { test: "value" };
+  // deno-lint-ignore no-explicit-any
+  const provider = new DenoKVDataProvider<any>(kv);
 
-    provider.Set(key, value);
+  const keyRoot = "testKey";
 
-    const result = provider.Get(key);
+  const key = [keyRoot, "hello"];
+  const value = { test: "world" };
 
-    assertEquals(result, value);
-    assert(result !== null);
+  const key1 = [keyRoot, "hi"];
+  const value1 = { test: "people" };
+
+  await t.step("Create First", async () => {
+    await provider.Set(key, value);
+
+    const result = await provider.Get(key);
+
+    assertEquals(result.test, value.test);
   });
 
-  describe("Delete Test", () => {
-    const kv = new Map();
-    const provider = new DenoKVDataProvider(kv);
+  await t.step("Create Second", async () => {
+    await provider.Set(key1, value1);
 
-    const key = ["testKey"];
-    const value = { test: "value" };
+    const result = await provider.Get(key1);
 
-    provider.Set(key, value);
-    provider.Delete(key);
+    assertEquals(result.test, value1.test);
+  });
 
-    const result = provider.Get(key);
+  await t.step("List Check", async () => {
+    const results = await provider.List([keyRoot]);
+
+    assertEquals(results.length, 2);
+
+    assertEquals(results[1].test, value1.test);
+  });
+
+  await t.step("Update Check", async () => {
+    const newValue = "world2";
+
+    await provider.Set(key, { test: newValue });
+
+    const result = await provider.Get(key);
+
+    assertEquals(result.test, newValue);
+  });
+
+  await t.step("Delete Check", async () => {
+    await provider.Delete(key);
+
+    const result = await provider.Get(key);
 
     assertEquals(result, null);
   });
+
+  kv.close();
 });

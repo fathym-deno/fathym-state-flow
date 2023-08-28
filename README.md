@@ -97,3 +97,7 @@ const comment: Comment = DB.Users(user.email).Comments.set({
 Please note that the `query` method in `DenoKVDataProvider` and the validation
 in `Database` class are not implemented. You will need to implement these parts
 based on your requirements.
+
+> In order to use deno KV you must enable it either by adding the `--unstable`
+> flag to your `deno run *` or `deno test *` commands, or by updating the
+> compiler options `lib` properties array value with `deno.unstable`.
