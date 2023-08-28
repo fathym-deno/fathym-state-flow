@@ -77,11 +77,11 @@ export type JsonSchema = {
   /**
    * An array that lists the possible values for the data.
    */
-  enum?: any[];
+  enum?: Record<string, unknown>[];
   /**
    * The default value for the data.
    */
-  default?: any;
+  default?: Record<string, unknown>;
   /**
    * A format that the data must adhere to.
    */

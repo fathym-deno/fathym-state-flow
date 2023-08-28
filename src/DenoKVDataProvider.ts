@@ -17,9 +17,8 @@ export class DenoKVDataProvider<T> implements IDataProvider<T> {
     await this.kv.delete(key);
   }
 
-  public async Query(query: JsonSchema): Promise<T[]> {
-    // Implement query logic here
-    return [];
+  public Query(_query: JsonSchema): Promise<T[]> {
+    return Promise.resolve([]);
   }
 
   /**
