@@ -1,4 +1,4 @@
-import { JsonSchema } from './JsonSchema';
+import { JsonSchema } from './JsonSchema.ts';
 
 /**
  * IDataProvider interface
@@ -40,4 +40,12 @@ export interface IDataProvider<T> {
    * @returns A promise that resolves with an array of data that matches the query.
    */
   query(query: JsonSchema): Promise<T[]>;
+
+  /**
+   * Lists the values for the given prefix from the data provider.
+   * 
+   * @param prefix The prefix as an array of string or number.
+   * @returns A promise that resolves with an array of values that match the prefix.
+   */
+  list(prefix: (string | number)[]): Promise<T[]>;
 }
