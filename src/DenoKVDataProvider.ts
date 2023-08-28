@@ -4,20 +4,20 @@ import { JsonSchema } from "./JsonSchema.ts";
 export class DenoKVDataProvider<T> implements IDataProvider<T> {
   constructor(private kv: Deno.Kv) {}
 
-  async set(key: (string | number)[], value: T): Promise<void> {
+  public async Set(key: (string | number)[], value: T): Promise<void> {
     await this.kv.set(key, value);
   }
 
-  async get(key: (string | number)[]): Promise<T | null> {
+  public async Get(key: (string | number)[]): Promise<T | null> {
     const res = await this.kv.get(key);
     return res ? (res.value as T) : null;
   }
 
-  async delete(key: (string | number)[]): Promise<void> {
+  public async Delete(key: (string | number)[]): Promise<void> {
     await this.kv.delete(key);
   }
 
-  async query(query: JsonSchema): Promise<T[]> {
+  public async Query(query: JsonSchema): Promise<T[]> {
     // Implement query logic here
     return [];
   }
@@ -28,7 +28,7 @@ export class DenoKVDataProvider<T> implements IDataProvider<T> {
    * @param prefix The prefix as an array of string or number.
    * @returns A promise that resolves with an array of values that match the prefix.
    */
-  async list(prefix: (string | number)[]): Promise<T[]> {
+  public async List(prefix: (string | number)[]): Promise<T[]> {
     const iter = this.kv.list({ prefix });
     const values = [];
     for await (const res of iter) {

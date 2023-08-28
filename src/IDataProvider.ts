@@ -14,7 +14,7 @@ import { JsonSchema } from "./JsonSchema.ts";
    * @param value The value to be set.
    * @returns A promise that resolves when the operation is complete.
    */
-  set(key: (string | number)[], value: T): Promise<void>;
+  Set(key: (string | number)[], value: T): Promise<void>;
 
   /**
    * Gets the value for the given key from the data provider.
@@ -22,7 +22,7 @@ import { JsonSchema } from "./JsonSchema.ts";
    * @param key The key as an array of string or number.
    * @returns A promise that resolves with the value, or null if the key does not exist.
    */
-  get(key: (string | number)[]): Promise<T | null>;
+  Get(key: (string | number)[]): Promise<T | null>;
 
   /**
    * Deletes the value for the given key from the data provider.
@@ -30,7 +30,7 @@ import { JsonSchema } from "./JsonSchema.ts";
    * @param key The key as an array of string or number.
    * @returns A promise that resolves when the operation is complete.
    */
-  delete(key: (string | number)[]): Promise<void>;
+  Delete(key: (string | number)[]): Promise<void>;
 
   /**
    * Queries the data provider with the given JsonSchema.
@@ -38,7 +38,7 @@ import { JsonSchema } from "./JsonSchema.ts";
    * @param query The JsonSchema to use for the query.
    * @returns A promise that resolves with an array of data that matches the query.
    */
-  query(query: JsonSchema): Promise<T[]>;
+  Query(query: JsonSchema): Promise<T[]>;
 
   /**
    * Lists the values for the given prefix from the data provider.
@@ -46,5 +46,5 @@ import { JsonSchema } from "./JsonSchema.ts";
    * @param prefix The prefix as an array of string or number.
    * @returns A promise that resolves with an array of values that match the prefix.
    */
-  list(prefix: (string | number)[]): Promise<T[]>;
+  List(prefix: (string | number)[]): Promise<T[]>;
 }
