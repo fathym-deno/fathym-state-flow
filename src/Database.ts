@@ -2,7 +2,10 @@ import { IDataProvider } from "./IDataProvider.ts";
 import { JsonSchema } from "./JsonSchema.ts";
 
 export class Database<T> {
-  constructor(private dataProvider: IDataProvider<T>, private schema: JsonSchema) {}
+  constructor(
+    private dataProvider: IDataProvider<T>,
+    private schema: JsonSchema,
+  ) {}
 
   async set(key: string, value: T): Promise<void> {
     await this.dataProvider.set(key, value);

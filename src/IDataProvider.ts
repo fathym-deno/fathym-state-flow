@@ -1,16 +1,16 @@
-import { JsonSchema } from './JsonSchema';
+import { JsonSchema } from "./JsonSchema.ts";
 
 /**
  * IDataProvider interface
- * 
+ *
  * This interface defines the methods for a data provider.
- * 
+ *
  * @template T The type of data to be handled by the data provider.
  */
 export interface IDataProvider<T> {
   /**
    * Sets the value for the given key in the data provider.
-   * 
+   *
    * @param key The key as an array of string or number.
    * @param value The value to be set.
    * @returns A promise that resolves when the operation is complete.
@@ -19,7 +19,7 @@ export interface IDataProvider<T> {
 
   /**
    * Gets the value for the given key from the data provider.
-   * 
+   *
    * @param key The key as an array of string or number.
    * @returns A promise that resolves with the value, or null if the key does not exist.
    */
@@ -27,7 +27,7 @@ export interface IDataProvider<T> {
 
   /**
    * Deletes the value for the given key from the data provider.
-   * 
+   *
    * @param key The key as an array of string or number.
    * @returns A promise that resolves when the operation is complete.
    */
@@ -35,7 +35,7 @@ export interface IDataProvider<T> {
 
   /**
    * Queries the data provider with the given JsonSchema.
-   * 
+   *
    * @param query The JsonSchema to use for the query.
    * @returns A promise that resolves with an array of data that matches the query.
    */

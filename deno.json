@@ -14,7 +14,8 @@
   },
   "compilerOptions": {
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "preact",
+    "lib": ["deno.unstable"]
   },
   "lock": false,
   "fmt": {
