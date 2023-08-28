@@ -21,4 +21,19 @@ export class DenoKVDataProvider<T> implements IDataProvider<T> {
     // Implement query logic here
     return [];
   }
+
+  /**
+   * Lists the values for the given prefix from the data provider.
+   *
+   * @param prefix The prefix as an array of string or number.
+   * @returns A promise that resolves with an array of values that match the prefix.
+   */
+  async list(prefix: (string | number)[]): Promise<T[]> {
+    const iter = this.kv.list({ prefix });
+    const values = [];
+    for await (const res of iter) {
+      values.push(res.value as T);
+    }
+    return values;
+  }
 }

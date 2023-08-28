@@ -1,4 +1,8 @@
+// HEAD
 import { JsonSchema } from "./JsonSchema.ts";
+//
+import { JsonSchema } from "./JsonSchema.ts";
+//4029706e7d6ea29babd4a40ef68261a4c6bf49be
 
 /**
  * IDataProvider interface
@@ -6,8 +10,7 @@ import { JsonSchema } from "./JsonSchema.ts";
  * This interface defines the methods for a data provider.
  *
  * @template T The type of data to be handled by the data provider.
- */
-export interface IDataProvider<T> {
+ */export interface IDataProvider<T> {
   /**
    * Sets the value for the given key in the data provider.
    *
@@ -40,4 +43,12 @@ export interface IDataProvider<T> {
    * @returns A promise that resolves with an array of data that matches the query.
    */
   query(query: JsonSchema): Promise<T[]>;
+
+  /**
+   * Lists the values for the given prefix from the data provider.
+   *
+   * @param prefix The prefix as an array of string or number.
+   * @returns A promise that resolves with an array of values that match the prefix.
+   */
+  list(prefix: (string | number)[]): Promise<T[]>;
 }
