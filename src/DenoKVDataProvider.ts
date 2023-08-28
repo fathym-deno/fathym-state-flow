@@ -4,17 +4,17 @@ import { JsonSchema } from "./JsonSchema.ts";
 export class DenoKVDataProvider<T> implements IDataProvider<T> {
   constructor(private kv: Deno.Kv) {}
 
-  async set(key: string, value: T): Promise<void> {
-    await this.kv.set([key], value);
+  async set(key: (string | number)[], value: T): Promise<void> {
+    await this.kv.set(key, value);
   }
 
-  async get(key: string): Promise<T | null> {
-    const res = await this.kv.get([key]);
+  async get(key: (string | number)[]): Promise<T | null> {
+    const res = await this.kv.get(key);
     return res ? (res.value as T) : null;
   }
 
-  async delete(key: string): Promise<void> {
-    await this.kv.delete([key]);
+  async delete(key: (string | number)[]): Promise<void> {
+    await this.kv.delete(key);
   }
 
   async query(query: JsonSchema): Promise<T[]> {
