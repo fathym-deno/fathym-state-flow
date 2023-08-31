@@ -8,9 +8,9 @@ export class DenoKVDataProvider<T> implements IDataProvider<T> {
     await this.kv.set(key, value);
   }
 
-  public async Get(key: (string | number)[]): Promise<T | null> {
+  public async Get(key: (string | number)[]): Promise<T | undefined> {
     const res = await this.kv.get(key);
-    return res ? (res.value as T) : null;
+    return res ? (res.value as T) : undefined;
   }
 
   public async Delete(key: (string | number)[]): Promise<void> {

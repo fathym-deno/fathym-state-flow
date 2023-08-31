@@ -72,22 +72,24 @@ await MyDatabaseManager.Generate();
 import { TestDB, User, Post, Comment } from "@fathym/state-flow/TestDB";
 import { DenoKVDataProvider } from '@fathym/state-flow';
 
-export const MyDataProvider = new DenoKVDataProvider(Deno.openKv());
+export const MyDataProvider = new DenoKVDataProvider(await Deno.openKv());
 
 const DB = new TestDB(MyDataProvider);
 
-const user: User = DB.Users.set({
+const user: User = DB.Users.Set({
   Email: "useremail@domain.com",
   DisplayName: "The User"
 } as User);
 
-const post: Post = DB.Users(user.Email).Posts.set({
+const users = DB.Users(user.Email).Get();
+
+const post: Post = DB.Users(user.Email).Posts.Set({
   ID: Guid.NewGuid(),
   Title: "This is an example post",
   Content: "This would be the content of the new example post"
 } as Post);
 
-const comment: Comment = DB.Users(user.email).Comments.set({
+const comment: Comment = DB.Users(user.email).Comments.Set({
   ID: Guid.NewGuid(),
   Title: "This is an example comment",
   Content: "This would be the content of the new example comment"

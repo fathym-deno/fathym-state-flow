@@ -22,7 +22,7 @@ import { JsonSchema } from "./JsonSchema.ts";
    * @param key The key as an array of string or number.
    * @returns A promise that resolves with the value, or null if the key does not exist.
    */
-  Get(key: (string | number)[]): Promise<T | null>;
+  Get(key: (string | number)[]): Promise<T | undefined>;
 
   /**
    * Deletes the value for the given key from the data provider.
