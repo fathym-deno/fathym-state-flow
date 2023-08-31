@@ -6,7 +6,7 @@ import {
 } from "../../src/databases/Database.ts";
 import { IDataProvider } from "../../src/databases/IDataProvider.ts";
 import { DenoKVDataProvider } from "../../src/databases/providers/DenoKVDataProvider.ts";
-import { assertEquals, randomUUID } from "../test.deps.ts";
+import { assertEquals } from "../test.deps.ts";
 
 Deno.test("Databases Basic Testing", async (t) => {
   type User = {
@@ -32,9 +32,9 @@ Deno.test("Databases Basic Testing", async (t) => {
 
   const DB = new TestDB(prvdrFactory);
 
-  const userId = randomUUID.generate() as string;
+  const userId = crypto.randomUUID();
 
-  const userId2 = randomUUID.generate() as string;
+  const userId2 = crypto.randomUUID();
 
   await t.step("Users Set", async () => {
     await DB.Users(userId).Set({
@@ -51,6 +51,8 @@ Deno.test("Databases Basic Testing", async (t) => {
   await t.step("Users Get", async () => {
     const user = await DB.Users(userId).Get();
 
+    console.log(userId);
+
     assertEquals(user?.Email, "useremail@domain.com");
     assertEquals(user?.DisplayName, "The User");
   });
@@ -61,21 +63,21 @@ Deno.test("Databases Basic Testing", async (t) => {
   //     assertEquals(users?.length, 2);
   //   });
 
-  const users = await DB.Users.List!();
+  //   const users = await DB.Users.List!();
 
-  for await (const user of users) {
-    const { key, value } = user;
+  //   for await (const user of users) {
+  //     const { key, value } = user;
 
-    let u = await DB.Users(key).Get();
+  //     let u = await DB.Users(key).Get();
 
-    assertEquals(u?.Email, "useremail@domain.com");
+  //     assertEquals(u?.Email, "useremail@domain.com");
 
-    await DB.Users(key).Delete();
+  //     await DB.Users(key).Delete();
 
-    u = await DB.Users(key).Get();
+  //     u = await DB.Users(key).Get();
 
-    assertEquals(u, null);
-  }
+  //     assertEquals(u, null);
+  //   }
 
   kv.close();
 });

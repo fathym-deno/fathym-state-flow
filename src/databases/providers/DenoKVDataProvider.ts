@@ -55,7 +55,7 @@ export class DenoKVDataProvider<T> implements IDataProvider<T> {
     // console.log(key);
 
     for await (const res of iter) {
-      const key = res.key[0].toString(); //.values().map((k) => {
+      const key = res.key[1].toString(); //.values().map((k) => {
       //   return k.toString();
       // });
       console.log(key);

@@ -44,6 +44,8 @@ export class Database {
     const factoried: DatabaseRecordsFactoryFull<T> = (
       key: string | (string | number)[],
     ): DatabaseRecords<T> => {
+      key = typeof key === "string" ? [key] : key;
+
       return this.loadRecords<T>([...keyRoot, ...key]);
     };
 
