@@ -46,5 +46,7 @@ import { JsonSchema } from "./JsonSchema.ts";
    * @param prefix The prefix as an array of string or number.
    * @returns A promise that resolves with an array of values that match the prefix.
    */
-  List(prefix: (string | number)[]): Promise<T[]>;
+  List(
+    prefix: (string | number)[],
+  ): Promise<{ key: (string | number)[]; value: T }[]>;
 }

@@ -1,6 +1,21 @@
 import { IDataProvider } from "../IDataProvider.ts";
 import { JsonSchema } from "../JsonSchema.ts";
 
+function removeIdenticalElements(...arrays: any[][]): any[] {
+  // Iterate over each element of the first array
+  const result = arrays[0].reduce((acc, curr, index) => {
+    // Check if all arrays have the same element at the current position
+    if (arrays.every((a) => a[index] === curr)) {
+      // Add the element to the result array
+      acc.push(curr);
+    }
+
+    return acc;
+  }, []);
+
+  return result;
+}
+
 export class DenoKVDataProvider<T> implements IDataProvider<T> {
   constructor(private kv: Deno.Kv) {}
 
@@ -27,12 +42,30 @@ export class DenoKVDataProvider<T> implements IDataProvider<T> {
    * @param prefix The prefix as an array of string or number.
    * @returns A promise that resolves with an array of values that match the prefix.
    */
-  public async List(prefix: (string | number)[]): Promise<T[]> {
+  public async List(
+    prefix: (string | number)[],
+  ): Promise<{ key: (string | number)[]; value: T }[]> {
     const iter = this.kv.list({ prefix });
-    const values = [];
+
+    const values: { key: (string | number)[]; value: T }[] = [];
+
+    // const key = removeIdenticalElements(keyRoot, l.key);
+
+    // console.log(keyRoot);
+    // console.log(key);
+
     for await (const res of iter) {
-      values.push(res.value as T);
+      const key = res.key[0].toString(); //.values().map((k) => {
+      //   return k.toString();
+      // });
+      console.log(key);
+
+      values.push({
+        key: [key],
+        value: res.value as T,
+      });
     }
+
     return values;
   }
 }

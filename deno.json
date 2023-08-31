@@ -15,7 +15,13 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "lib": ["deno.unstable"]
+    "lib": [
+      "deno.unstable",
+      "deno.ns",
+      "dom",
+      "dom.iterable",
+      "dom.asynciterable"
+    ]
   },
   "lock": false,
   "fmt": {
