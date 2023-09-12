@@ -1,5 +1,3 @@
-import { TsConfigResolver } from "https://deno.land/x/ts_morph@18.0.0/common/ts_morph_common.js";
-import { DatabaseRecords } from "../../src/databases/DatabaseRecords.ts";
 import {
   Database,
   DatabaseRecordsFactoryFull,
@@ -63,21 +61,23 @@ Deno.test("Databases Basic Testing", async (t) => {
   //     assertEquals(users?.length, 2);
   //   });
 
-  //   const users = await DB.Users.List!();
+  const users = await DB.Users.List!();
 
-  //   for await (const user of users) {
-  //     const { key, value } = user;
+  for await (const user of users) {
+    const { key, value } = user;
 
-  //     let u = await DB.Users(key).Get();
+    console.log(key);
 
-  //     assertEquals(u?.Email, "useremail@domain.com");
+    let u = await DB.Users(key).Get();
 
-  //     await DB.Users(key).Delete();
+    assertEquals(u?.Email, "useremail@domain.com");
 
-  //     u = await DB.Users(key).Get();
+    await DB.Users(key).Delete();
 
-  //     assertEquals(u, null);
-  //   }
+    u = await DB.Users(key).Get();
+
+    assertEquals(u, null);
+  }
 
   kv.close();
 });

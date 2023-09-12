@@ -1,21 +1,6 @@
 import { IDataProvider } from "../IDataProvider.ts";
 import { JsonSchema } from "../JsonSchema.ts";
 
-function removeIdenticalElements(...arrays: any[][]): any[] {
-  // Iterate over each element of the first array
-  const result = arrays[0].reduce((acc, curr, index) => {
-    // Check if all arrays have the same element at the current position
-    if (arrays.every((a) => a[index] === curr)) {
-      // Add the element to the result array
-      acc.push(curr);
-    }
-
-    return acc;
-  }, []);
-
-  return result;
-}
-
 export class DenoKVDataProvider<T> implements IDataProvider<T> {
   constructor(private kv: Deno.Kv) {}
 
@@ -49,19 +34,9 @@ export class DenoKVDataProvider<T> implements IDataProvider<T> {
 
     const values: { key: (string | number)[]; value: T }[] = [];
 
-    // const key = removeIdenticalElements(keyRoot, l.key);
-
-    // console.log(keyRoot);
-    // console.log(key);
-
     for await (const res of iter) {
-      const key = res.key[1].toString(); //.values().map((k) => {
-      //   return k.toString();
-      // });
-      console.log(key);
-
       values.push({
-        key: [key],
+        key: res.key.map((k) => k.toString()),
         value: res.value as T,
       });
     }

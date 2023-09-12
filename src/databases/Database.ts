@@ -1,6 +1,21 @@
 import { IDataProvider } from "./IDataProvider.ts";
 import { DatabaseRecords } from "./DatabaseRecords.ts";
 
+function removeIdenticalElements(...arrays: any[][]): any[] {
+  // Iterate over each element of the first array
+  const result = arrays[0].reduce((acc, curr, index) => {
+    // Check if all arrays have the same element at the current position
+    if (arrays.every((a) => a[index] === curr)) {
+      // Add the element to the result array
+      acc.push(curr);
+    }
+
+    return acc;
+  }, []);
+
+  return result;
+}
+
 export type DatabaseRecordsFactory<T> = (
   key: string | (string | number)[],
 ) => DatabaseRecords<T>;
