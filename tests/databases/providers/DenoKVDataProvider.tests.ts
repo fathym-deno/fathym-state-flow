@@ -1,5 +1,4 @@
 import { assertEquals } from "$std/testing/asserts.ts";
-import { TsConfigResolver } from "https://deno.land/x/ts_morph@18.0.0/common/ts_morph_common.js";
 import { DenoKVDataProvider } from "../../../src/databases/providers/DenoKVDataProvider.ts";
 
 Deno.test("Deno KV Data Provider Tests", async (t) => {

@@ -1,7 +1,8 @@
 import { IDataProvider } from "./IDataProvider.ts";
 import { DatabaseRecords } from "./DatabaseRecords.ts";
 
-function removeIdenticalElements(...arrays: any[][]): any[] {
+// deno-lint-ignore no-explicit-any
+export function removeIdenticalElements(...arrays: any[][]): any[] {
   // Iterate over each element of the first array
   const result = arrays[0].reduce((acc, curr, index) => {
     // Check if all arrays have the same element at the current position

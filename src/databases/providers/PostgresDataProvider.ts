@@ -12,7 +12,8 @@ export class PostgresDataProvider<T> implements IDataProvider<T> {
   public async Set(key: (string | number)[], value: T): Promise<void> {
     const connection = await this.pool.connect();
     try {
-      await connection.queryObject`INSERT INTO table (key, value) VALUES (${key}, ${value})`;
+      await connection
+        .queryObject`INSERT INTO table (key, value) VALUES (${key}, ${value})`;
     } finally {
       connection.release();
     }
@@ -21,7 +22,8 @@ export class PostgresDataProvider<T> implements IDataProvider<T> {
   public async Get(key: (string | number)[]): Promise<T | null> {
     const connection = await this.pool.connect();
     try {
-      const result = await connection.queryObject`SELECT value FROM table WHERE key = ${key}`;
+      const result = await connection
+        .queryObject`SELECT value FROM table WHERE key = ${key}`;
       return result.rows[0] as T;
     } finally {
       connection.release();
@@ -44,7 +46,8 @@ export class PostgresDataProvider<T> implements IDataProvider<T> {
   public async List(prefix: (string | number)[]): Promise<T[]> {
     const connection = await this.pool.connect();
     try {
-      const result = await connection.queryObject`SELECT value FROM table WHERE key LIKE ${prefix}%`;
+      const result = await connection
+        .queryObject`SELECT value FROM table WHERE key LIKE ${prefix}%`;
       return result.rows as T[];
     } finally {
       connection.release();

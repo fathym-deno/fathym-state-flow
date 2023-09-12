@@ -64,7 +64,7 @@ Deno.test("Databases Basic Testing", async (t) => {
   const users = await DB.Users.List!();
 
   for await (const user of users) {
-    const { key, value } = user;
+    const { key } = user;
 
     console.log(key);
 
