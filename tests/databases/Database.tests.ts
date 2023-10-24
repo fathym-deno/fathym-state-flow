@@ -11,13 +11,21 @@ Deno.test("Databases Basic Testing", async (t) => {
     DisplayName: string;
 
     Email: string;
+
+    Posts: DatabaseRecordsFactoryFull<Post>;
+  };
+
+  type Post = {
+    Content: string;
+
+    Title: string;
   };
 
   class TestDB extends Database {
     public Users = this.loadRecordsFactory<
       DatabaseRecordsFactoryFull<User>,
       User
-    >("Users");
+    >(["Users"]);
 
     constructor(protected dataProviderFactory: <T>() => IDataProvider<T>) {
       super(dataProviderFactory);
@@ -30,29 +38,38 @@ Deno.test("Databases Basic Testing", async (t) => {
 
   const DB = new TestDB(prvdrFactory);
 
-  const userId = crypto.randomUUID();
+  const userId = crypto.randomUUID().toString();
 
-  const userId2 = crypto.randomUUID();
+  const userId2 = crypto.randomUUID().toString();
 
   await t.step("Users Set", async () => {
-    await DB.Users(userId).Set({
+    await DB.Users([userId]).Set({
       Email: "useremail@domain.com",
       DisplayName: "The User",
     } as User);
 
-    await DB.Users(userId2).Set({
+    await DB.Users([userId2]).Set({
       Email: "useremail2@domain.com",
       DisplayName: "The User2",
     } as User);
   });
 
-  await t.step("Users Get", async () => {
-    const user = await DB.Users(userId).Get();
+  await t.step("Users Get 1", async () => {
+    const user = await DB.Users([userId]).Get();
 
     console.log(userId);
 
     assertEquals(user?.Email, "useremail@domain.com");
     assertEquals(user?.DisplayName, "The User");
+  });
+
+  await t.step("Users Get 2", async () => {
+    const user = await DB.Users([userId]).Get();
+
+    console.log(userId);
+
+    assertEquals(user?.Email, "useremail2@domain.com");
+    assertEquals(user?.DisplayName, "The User2");
   });
 
   //   await t.step("Users List/Delete", async () => {
@@ -61,16 +78,25 @@ Deno.test("Databases Basic Testing", async (t) => {
   //     assertEquals(users?.length, 2);
   //   });
 
+  const users2 = await kv.list({ prefix: [] });
+
+  // for await (const user of users2) {
+  //   await kv.delete(user.key);
+  // }
+
   const users = await DB.Users.List!();
 
   for await (const user of users) {
-    const { key } = user;
+    // let { key } = user;
+    const { key, value } = user;
 
     console.log(key);
 
+    // key = ["Users", key.join("").replace("Users", "")];
+
     let u = await DB.Users(key).Get();
 
-    assertEquals(u?.Email, "useremail@domain.com");
+    assertEquals(u?.Email, value.Email);
 
     await DB.Users(key).Delete();
 
