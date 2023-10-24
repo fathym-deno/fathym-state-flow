@@ -6,7 +6,8 @@ import { JsonSchema } from "./JsonSchema.ts";
  * This interface defines the methods for a data provider.
  *
  * @template T The type of data to be handled by the data provider.
- */ export interface IDataProvider<T> {
+ */
+export interface IDataProvider<T> {
   /**
    * Sets the value for the given key in the data provider.
    *
